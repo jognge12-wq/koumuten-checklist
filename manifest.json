@@ -1,6 +1,6 @@
 {
   "name": "矢橋林業チェックリスト",
-  "short_name": "矢橋チェック",
+  "short_name": "矢橋林業チェックリスト",
   "description": "現場の工程チェックを工務店主体で。実施状況を住友林業の生産担当が確認します。",
   "start_url": "./index.html",
   "scope": "./",
