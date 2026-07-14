@@ -2,7 +2,7 @@
    - オフラインキャッシュ（アプリシェル）
    - Web Push 受信 → 通知表示 → タップで該当物件を開く
    UIを変えたら CACHE_VERSION を必ず上げる。 */
-var CACHE_VERSION = "kc-v1";
+var CACHE_VERSION = "kc-v2";
 var SHELL = ["./","index.html","app.js","manifest.json","icon-180.png","icon-192.png","icon-512.png"];
 
 self.addEventListener("install", function(e){
@@ -31,8 +31,8 @@ self.addEventListener("fetch", function(e){
 /* Web Push 受信 */
 self.addEventListener("push", function(e){
   var data={};
-  try{ data=e.data.json(); }catch(err){ data={ title:"工程チェックリスト", body:(e.data&&e.data.text())||"" }; }
-  var title=data.title||"工程チェックリスト";
+  try{ data=e.data.json(); }catch(err){ data={ title:"矢橋林業チェックリスト", body:(e.data&&e.data.text())||"" }; }
+  var title=data.title||"矢橋林業チェックリスト";
   var opts={
     body:data.body||"",
     icon:"icon-192.png",

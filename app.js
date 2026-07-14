@@ -76,10 +76,14 @@ var MASTER = {
 var USERS = [
   { name:"大澤", role:"work", org:"矢橋林業" },
   { name:"山川", role:"work", org:"矢橋林業" },
-  { name:"松井", role:"view", org:"住友林業 生産担当" },
-  { name:"佐々木", role:"view", org:"住友林業 生産担当" }
+  { name:"永井", role:"view", org:"住友林業 生産担当" },
+  { name:"藤井", role:"view", org:"住友林業 生産担当" },
+  { name:"城岸", role:"view", org:"住友林業 生産担当" },
+  { name:"河出", role:"view", org:"住友林業 生産担当" },
+  { name:"市川", role:"view", org:"住友林業 生産担当" },
+  { name:"桑原", role:"view", org:"住友林業 生産担当" }
 ];
-var SEISAN = ["松井","佐々木"];
+var SEISAN = ["永井","藤井","城岸","河出","市川","桑原"];
 
 /* ---- 工程完了コメント（30・絵文字なし） ---- */
 var COMPLETE_MSGS = [
@@ -143,7 +147,7 @@ function buildChecks(phasesWithChecked){
 function seed(){
   var Y=2026;
   return [
-    { id:"p1", name:"山田様邸", seisan:"松井",
+    { id:"p1", name:"山田様邸", seisan:"永井",
       dates:{ "着工前":Y+"-05-18","基礎完了":Y+"-06-20","建て方":Y+"-07-10","木完":Y+"-07-24","竣工":"","引渡し":"" },
       checks: buildChecks({
         "着工前": Object.fromEntries(MASTER["着工前"].map(function(i){return [i,{by:"大澤",at:"5/15"}];})),
@@ -151,13 +155,13 @@ function seed(){
         "建て方": { "日誌の記入":{by:"山川",at:"7/10"}, "納品書保管ケースの設置":{by:"山川",at:"7/9"} }
       })
     },
-    { id:"p2", name:"佐藤様邸", seisan:"松井",
+    { id:"p2", name:"佐藤様邸", seisan:"永井",
       dates:{ "着工前":Y+"-06-30","基礎完了":Y+"-07-18","建て方":"","木完":"","竣工":"","引渡し":"" },
       checks: buildChecks({
         "着工前": Object.fromEntries(MASTER["着工前"].slice(0,3).map(function(i){return [i,{by:"大澤",at:"6/28"}];}))
       })
     },
-    { id:"p3", name:"鈴木様邸", seisan:"佐々木",
+    { id:"p3", name:"鈴木様邸", seisan:"藤井",
       dates:{ "着工前":Y+"-03-10","基礎完了":Y+"-04-05","建て方":Y+"-05-01","木完":Y+"-06-10","竣工":"","引渡し":"" },
       checks: (function(){
         var c = buildChecks({});
