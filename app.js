@@ -606,8 +606,12 @@ document.getElementById("calBack").addEventListener("click", function(e){ if(e.t
    起動
    ========================================================================= */
 async function start(){
-  // 保存済みの利用者
-  try{ var me=JSON.parse(localStorage.getItem(ME_KEY)); if(me){ STATE.user=me.user; STATE.role=me.role; } }catch(e){}
+  // 保存済みの利用者（ただし現在の名簿に居る人だけ復元。消えた名前は破棄して選び直し）
+  try{
+    var me=JSON.parse(localStorage.getItem(ME_KEY));
+    if(me && USERS.some(function(u){ return u.name===me.user; })){ STATE.user=me.user; STATE.role=me.role; }
+    else { localStorage.removeItem(ME_KEY); }
+  }catch(e){}
   await bootstrap();
   render();
   if(!STATE.user){ openId(); }
