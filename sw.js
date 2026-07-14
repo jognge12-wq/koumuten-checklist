@@ -2,7 +2,7 @@
    - オフラインキャッシュ（アプリシェル）
    - Web Push 受信 → 通知表示 → タップで該当物件を開く
    UIを変えたら CACHE_VERSION を必ず上げる。 */
-var CACHE_VERSION = "kc-v3";
+var CACHE_VERSION = "kc-v4";
 var SHELL = ["./","index.html","app.js","manifest.json","icon-180.png","icon-192.png","icon-512.png"];
 
 self.addEventListener("install", function(e){

@@ -81,9 +81,10 @@ var USERS = [
   { name:"城岸", role:"view", org:"住友林業 生産担当" },
   { name:"河出", role:"view", org:"住友林業 生産担当" },
   { name:"市川", role:"view", org:"住友林業 生産担当" },
-  { name:"桑原", role:"view", org:"住友林業 生産担当" }
+  { name:"桑原", role:"view", org:"住友林業 生産担当" },
+  { name:"髙橋", role:"view", org:"住友林業 生産担当" }
 ];
-var SEISAN = ["永井","藤井","城岸","河出","市川","桑原"];
+var SEISAN = ["永井","藤井","城岸","河出","市川","桑原","髙橋"];
 
 /* ---- 工程完了コメント（30・絵文字なし） ---- */
 var COMPLETE_MSGS = [
