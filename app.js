@@ -79,6 +79,7 @@ var MASTER = {
 var USERS = [
   { name:"大澤", role:"work", org:"矢橋林業" },
   { name:"山川", role:"work", org:"矢橋林業" },
+  { name:"管理・確認", role:"view", org:"矢橋林業" },   // 責任者・上長など複数人が対象
   { name:"生産グループ", role:"view", org:"住友林業" }
 ];
 /* 物件に割り当てる生産担当（＝物件の属性。絞り込みはここと実データから作る） */
@@ -492,12 +493,14 @@ function showView(v){
    利用者選択
    ========================================================================= */
 function renderIdOpts(){
-  var work=USERS.filter(function(u){return u.role==="work";}), view=USERS.filter(function(u){return u.role==="view";});
+  // 会社ごとに並べる（同じ会社にチェック可と閲覧のみが混在してよい）
+  var orgs=[]; USERS.forEach(function(u){ if(orgs.indexOf(u.org)<0) orgs.push(u.org); });
   function opt(u){ return '<button class="id-opt" onclick="pickUser(\''+u.name+'\',\''+u.role+'\')">'+esc(u.name)+
     '<span class="badge '+(u.role==="work"?"role-work":"role-view")+'">'+(u.role==="work"?"チェック可":"閲覧のみ")+'</span></button>'; }
-  document.getElementById("idOpts").innerHTML =
-    '<div class="id-group"><div class="id-grouplabel">矢橋林業（チェックする人）</div>'+work.map(opt).join("")+'</div>'+
-    '<div class="id-group"><div class="id-grouplabel">住友林業（確認する人）</div>'+view.map(opt).join("")+'</div>';
+  document.getElementById("idOpts").innerHTML = orgs.map(function(org){
+    return '<div class="id-group"><div class="id-grouplabel">'+esc(org)+'</div>'+
+      USERS.filter(function(u){ return u.org===org; }).map(opt).join("")+'</div>';
+  }).join("");
 }
 function openId(){ renderIdOpts(); document.getElementById("idOv").classList.add("open"); }
 function pickUser(name, role){
