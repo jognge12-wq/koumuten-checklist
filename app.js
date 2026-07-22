@@ -73,17 +73,15 @@ var MASTER = {
 };
 
 /* ---- 利用者マスタ ---- */
+/* 利用者
+   - チェックする人は必ず個人名（「誰が・いつ」の証跡が残るため）
+   - 見るだけの人はグループでよい（記録が残らない／人の入れ替わりに強い） */
 var USERS = [
   { name:"大澤", role:"work", org:"矢橋林業" },
   { name:"山川", role:"work", org:"矢橋林業" },
-  { name:"永井", role:"view", org:"住友林業 生産担当" },
-  { name:"藤井", role:"view", org:"住友林業 生産担当" },
-  { name:"城岸", role:"view", org:"住友林業 生産担当" },
-  { name:"河出", role:"view", org:"住友林業 生産担当" },
-  { name:"市川", role:"view", org:"住友林業 生産担当" },
-  { name:"桑原", role:"view", org:"住友林業 生産担当" },
-  { name:"髙橋", role:"view", org:"住友林業 生産担当" }
+  { name:"生産グループ", role:"view", org:"住友林業" }
 ];
+/* 物件に割り当てる生産担当（＝物件の属性。絞り込みはここと実データから作る） */
 var SEISAN = ["永井","藤井","城岸","河出","市川","桑原","髙橋"];
 
 /* ---- 工程完了コメント（30・絵文字なし） ---- */
@@ -271,7 +269,11 @@ function render(){
 
 function renderList(){
   var el = document.getElementById("view-list");
-  var seisanOpts = ["全員"].concat(SEISAN);
+  // 絞り込み候補は実データから生成（既知の並び順を優先し、新しい担当名も自動で拾う）
+  var present={}; STATE.properties.forEach(function(p){ if(p.seisan) present[p.seisan]=1; });
+  var ordered = SEISAN.filter(function(s){ return present[s]; })
+    .concat(Object.keys(present).filter(function(s){ return SEISAN.indexOf(s)<0; }));
+  var seisanOpts = ["全員"].concat(ordered);
   var list = STATE.properties.filter(function(p){ return STATE.filterSeisan==="全員" || p.seisan===STATE.filterSeisan; });
   // 並び: 期限超過→期限近い→順調
   var rank={over:0,soon:1,ok:2};
@@ -495,7 +497,7 @@ function renderIdOpts(){
     '<span class="badge '+(u.role==="work"?"role-work":"role-view")+'">'+(u.role==="work"?"チェック可":"閲覧のみ")+'</span></button>'; }
   document.getElementById("idOpts").innerHTML =
     '<div class="id-group"><div class="id-grouplabel">矢橋林業（チェックする人）</div>'+work.map(opt).join("")+'</div>'+
-    '<div class="id-group"><div class="id-grouplabel">住友林業 生産担当（確認する人）</div>'+view.map(opt).join("")+'</div>';
+    '<div class="id-group"><div class="id-grouplabel">住友林業（確認する人）</div>'+view.map(opt).join("")+'</div>';
 }
 function openId(){ renderIdOpts(); document.getElementById("idOv").classList.add("open"); }
 function pickUser(name, role){
